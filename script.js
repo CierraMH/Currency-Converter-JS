@@ -16,26 +16,27 @@ const historicalButton = document.getElementById("historical-rates");
 const historicalConvertion = document.getElementById("historical-rates-info");
 const saveButton = document.getElementById("save-favorite");
 const favoriteSaves = document.getElementById("favorite-currency-pairs");
+const saves = document.getElementsByClassName("saveDetails");
 
 buttonConvert.addEventListener("click", function (event) {
-  // console.log("convert-started?");
   let baseCurrency = base.value;
   let targetCurrency = target.value;
   let amountValue = amount.value;
+  if (amountValue < 0) {
+    convert.innerHTML = `Error please enter a valid number`
+    return
+  }
   fetch(`https://api.apilayer.com/exchangerates_data/convert?from=${baseCurrency}&to=${targetCurrency}&amount=${amountValue}`, requestOptions)
     .then((response) => response.json())
-    // .then((result) => console.log(result))
     .then((data) => {
       let results = data.result;
-      // let total = results * amountValue;
       convert.innerHTML = `${results} ${targetCurrency}`;
-    })
-    .catch((error) => console.log("error", error));
+    }) 
+        .catch((error) => console.log("error", error));
 });
 
 
 historicalButton.addEventListener("click", function(event){
-  // console.log("worked?");
 fetch(`https://api.apilayer.com/exchangerates_data/2020-12-10?&base=USD&symbols=USD,EUR`, requestOptions)
   .then((response) => response.json())
     // .then((result) => console.log(result))
@@ -46,37 +47,19 @@ historicalConvertion.innerHTML = `Historical exchange rate on Dec. 12, 2020: ${r
   .catch((error) => console.log("error", error));
 })
 
+let favorites = [];
 saveButton.addEventListener("click", function(){
-
-
-  
+  let baseCurrency = base.value;
+  let targetCurrency = target.value;
+favorites.push(`<button class="saveDetails">${baseCurrency} / ${targetCurrency}</button>`)
+favoriteSaves.innerHTML = `${favorites}`;
 })
 
+// saves.addEventListener("click", function(){
+//   })
 
 function showResults(elementId, result){
   const resultElement = document.getElementById(elementId);
   resultElement.innerHTML = result;
   resultElement.style.display = "block";
 }
-
-
-
-
-
-// fetch("https://api.apilayer.com/exchangerates_data/convert?to={base}&from={target}&amount={amount}", requestOptions)
-
-// https://api.apilayer.com/currency_data/convert?base=USD&symbols=EUR,GBP,JPY&amount=5&date=2018-01-01
-
-// fetch(`https://api.apilayer.com/exchangerates_data/convert?from=${baseCurrency}&to=${targetCurrency}&${amountValue}&date=2020-12-10`, requestOptions)
-
-
-
-
-// fetch(`https://api.apilayer.com/v1/convert?date=${date}&base=${baseCurrency}`, requestOptions)
-// fetch(`https://api.apilayer.com/v1/2020-12-10&base=${baseCurrency}&${targetCurrency}`, requestOptions)
-// fetch(`https://api.apilayer.com/v1/2020-12-10&base=${baseCurrency}`, requestOptions)
-  // fetch(`https://api.apilayer.com/exchangerates_data/convert?date=${date}`, requestOptions)
-  // .then((data) => {
-  //   let results = data.result;
-  //   convert.innerHTML = `${results} ${targetCurrency}`;
-  // })
