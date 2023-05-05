@@ -12,18 +12,21 @@
         <label for="base-currency">Base Currency:</label>
         <select id="base-currency">
          <option value="USD">USD</option>
-         <option value="EUR">EUR</option></select>
+         <option value="EUR">EUR</option>
+        </select>
         <label for="amount">Amount:</label>
         <input type="number" id="amount" value="" min="0">
         <label for="target-currency">Target Currency:</label>
         <select id="target-currency">
           <option value="USD">USD</option>
-         <option value="EUR">EUR</option></select>
+         <option value="EUR">EUR</option>
         </select>
         <p>Converted Amount: <span id="converted-amount"></span></p>
       <button id="convert-button">Convert</button>
         <button id="historical-rates">View Historical Rates</button>
-        <div id="historical-rates-container"></div>
+        <div id="historical-rates-container">
+            <p><span id="historical-rates-info"></span></p>
+        </div>
         <button id="save-favorite">Save Favorite</button>
         <div id="favorite-currency-pairs"></div>
     </div>
